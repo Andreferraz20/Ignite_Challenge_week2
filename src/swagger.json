@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Ignite Challenge - Week 2",
+        "description": "This is an Challenge of the Ignite NodeJS",
+        "version": "1.0.0",
+        "contact": {
+            "email": "luizlopesferraz22@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": ["users"],
+                "summary": "Cria um novo usuário",
+                "directory": "Create a new user",
+                "requestBody": {
+                    "required": true,
+                    "description": "Campos Obrigatórios para criação de um usuário",
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example":{
+                                    "name": "User name sample",
+                                    "emaill": "User email sample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example":{
+                                        "admin": "false",
+                                        "id": "11c0975c-2cff-4d34-842b-021ec2df0a92",
+                                        "name": "User name sample",
+                                        "emaill": "User email sample",
+                                        "created_at": "2021-03-20T14:50:22.646Z",
+                                        "updated_at": "2021-03-20T14:50:22.646Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Email já esta sendo utilizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "This email is already in use"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["users"],
+                "summary": "Retorna todos os usuários",
+                "directory": "Return all users",
+                "description": "Somente o usuário `ADMIN` pode acessar",
+                "produces": ["application/json"],
+                "parameters":[
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "User Id must be an ADMIN",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "type": "object",
+                                        "properties": {
+                                            "admin": "boolean",
+                                            "id": "string",
+                                            "name": "string",
+                                            "emaill": "string",
+                                            "created_at": "string",
+                                            "updated_at": "string"
+                                        },
+                                        "type": "object",
+                                        "properties": {
+                                            "admin": "boolean",
+                                            "id": "string",
+                                            "name": "string",
+                                            "emaill": "string",
+                                            "created_at": "string",
+                                            "updated_at": "string"
+                                        }
+                                    },
+                                    "example":{
+                                        "array": {
+                                            "admin": "true",
+                                        "id": "11c0975c-example-id-021ec2df0a92",
+                                        "name": "User name sample",
+                                        "emaill": "User email sample",
+                                        "created_at": "2021-03-20T14:50:22.646Z",
+                                        "updated_at": "2021-03-20T14:50:22.646Z"
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário precisa ser ADMIN",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "The user needs to be an ADMIN"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
